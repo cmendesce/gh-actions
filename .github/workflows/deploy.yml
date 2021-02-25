@@ -1,0 +1,17 @@
+name: "Main"
+
+on:
+  release:
+    types: [published]
+
+
+jobs:
+  teste:
+    steps:
+      - name: Set outputs
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: Check outputs
+        run: echo ${{ steps.vars.outputs.sha_short }}
+      - name: Check outputs
+        run: echo ${{ github.sha }}
