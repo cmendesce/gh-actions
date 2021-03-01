@@ -15,4 +15,4 @@ jobs:
       - name: Check outputs
         run: echo ${{ steps.vars.outputs.sha_short }}
       - name: Check outputs
-        run: echo ${ GITHUB_SHA::8 }
+        run: echo ${ GITHUB_SHA:8 }
