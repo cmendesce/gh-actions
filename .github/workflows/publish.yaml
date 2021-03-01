@@ -5,23 +5,14 @@ on:
     branches:
       - "main"
 
+env:
+  CLUSTER: ${{ format(github.ref != 'refs/heads/main') }}
+
 jobs:
   teste:
     runs-on: ubuntu-latest
     steps:
       - name: Set env to deploy
         id: vars
-        env:
-          REF: ${{ github.ref }}
-        run: |
-          if [$REF == 'refs/heads/main']
-          then
-            echo "::set-output name=cluster::assessments-ecs-staging"
-            echo "::set-output name=backend::ecs/backend.json"
-            echo "::set-output name=frontend::ecs/frontend.json"
-          else
-            echo "::set-output name=cluster::assessments-ecs-prod"
-            echo "::set-output name=backend::ecs/backend.prod.json"
-            echo "::set-output name=frontend::ecs/frontend.prod.json"
-          fi
+        run: echo "The selected cluster is ${env.CLUSTER}"
         
