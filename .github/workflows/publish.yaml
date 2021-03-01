@@ -9,10 +9,21 @@ jobs:
   teste:
     runs-on: ubuntu-latest
     steps:
-      - name: Set outputs
+      - name: Set env to deploy
         id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        run: |
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+          if [$REF == 'refs/heads/main']
+          then
+            echo "::set-output name=cluster::assessments-ecs-staging"
+            echo "::set-output name=backend::ecs/backend.json"
+            echo "::set-output name=frontend::ecs/frontend.json"
+          else
+            echo "::set-output name=cluster::assessments-ecs-prod"
+            echo "::set-output name=backend::ecs/backend.prod.json"
+            echo "::set-output name=frontend::ecs/frontend.prod.json"
+          fi
+        env:
+          REF: ${{ github.ref }}
       - name: Check outputs
         run: echo ${{ steps.vars.outputs.sha_short }}
-      - name: Check outputs
-        run: echo ${ GITHUB_SHA:8 }
