@@ -6,7 +6,8 @@ on:
       - "main"
 
 env:
-  CLUSTER: ${{ format(github.ref != 'refs/heads/main') }}
+  CLUSTER: ${{ github.ref != 'refs/heads/main' && 'staging' || 'prod' }}
+  SHA_SHORT: ${{ git rev-parse --short HEAD }}
 
 jobs:
   teste:
@@ -14,5 +15,5 @@ jobs:
     steps:
       - name: Set env to deploy
         id: vars
-        run: echo "The selected cluster is ${{ env.CLUSTER }}"
+        run: echo "The selected cluster is ${{ env.CLUSTER }} and version id ${{ env.SHA_SHORT }}"
         
