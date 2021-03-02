@@ -6,7 +6,8 @@ on:
       - "main"
 
 env:
-  CLUSTER: ${{ github.ref != 'refs/remotes/origin/main' && 'staging' || 'prod' }}
+  MAIN: 'refs/remotes/origin/main'
+  CLUSTER: ${{ github.ref != ${{env.MAIN}} && 'staging' || 'prod' }}
 
 jobs:
   teste:
