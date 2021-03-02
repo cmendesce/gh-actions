@@ -6,7 +6,7 @@ on:
       - "main"
 
 env:
-  CLUSTER: ${{ github.ref != 'refs/heads/main' && 'staging' || 'prod' }}
+  CLUSTER: ${{ github.ref != 'refs/remotes/origin/main' && 'staging' || 'prod' }}
 
 jobs:
   teste:
@@ -18,4 +18,8 @@ jobs:
     - name: Set env to deploy
       id: vars
       run: echo "The selected cluster is ${{ env.CLUSTER }} and version id ${{ steps.slug.outputs.sha7 }}"
+    - name: Echo ref
+      run: echo "${{ github.ref }}"
+      
+      
         
