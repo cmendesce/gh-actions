@@ -9,7 +9,7 @@ on:
 
 env:
   MAIN: 'refs/remotes/origin/main'
-  CLUSTER: ${{ github.event.release.prerelease && 'prod' || 'staging' }}
+  CLUSTER: ${{ !github.event.release.prerelease && 'prod' || 'staging' }}
 
 jobs:
   teste:
