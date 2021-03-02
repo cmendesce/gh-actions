@@ -7,7 +7,6 @@ on:
 
 env:
   CLUSTER: ${{ github.ref != 'refs/heads/main' && 'staging' || 'prod' }}
-  SHA_SHORT: ${{ git rev-parse --short HEAD }}
 
 jobs:
   teste:
