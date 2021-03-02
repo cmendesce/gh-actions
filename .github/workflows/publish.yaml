@@ -12,7 +12,10 @@ jobs:
   teste:
     runs-on: ubuntu-latest
     steps:
-      - name: Set env to deploy
-        id: vars
-        run: echo "The selected cluster is ${{ env.CLUSTER }} and version id ${{ github.sha }}"
+    - name: Get short SHA
+      id: slug
+      run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+    - name: Set env to deploy
+      id: vars
+      run: echo "The selected cluster is ${{ env.CLUSTER }} and version id ${{ steps.slug.outputs.sha7 }}"
         
