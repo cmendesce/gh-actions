@@ -9,7 +9,7 @@ on:
 
 env:
   MAIN: 'refs/remotes/origin/main'
-  CLUSTER: ${{ github.ref != ${{env.MAIN}} && 'staging' || 'prod' }}
+  CLUSTER: ${{ github.event.release.prerelease && 'prod' || 'staging' }}
 
 jobs:
   teste:
@@ -23,6 +23,8 @@ jobs:
       run: echo "The selected cluster is ${{ env.CLUSTER }} and version id ${{ steps.slug.outputs.sha7 }}"
     - name: Echo ref
       run: echo "${{ github.ref }}"
+    - name: Echo release
+      run: echo "${{ github.event.release.prerelease }}"
       
       
         
