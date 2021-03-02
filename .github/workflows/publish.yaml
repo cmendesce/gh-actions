@@ -8,8 +8,7 @@ on:
       - "main"
 
 env:
-  MAIN: 'refs/remotes/origin/main'
-  CLUSTER: ${{ !github.event.release.prerelease && 'prod' || 'staging' }}
+  CLUSTER:  ${{ github.ref != 'refs/remotes/origin/main' && 'assessments-ecs-staging' || 'assessments-ecs-prod' }}
 
 jobs:
   teste:
