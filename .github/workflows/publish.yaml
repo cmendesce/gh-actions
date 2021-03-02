@@ -12,10 +12,7 @@ jobs:
   teste:
     runs-on: ubuntu-latest
     steps:
-      - name: Set version
-        id: version
-        run: echo "::set-output name=SHA_SHORT::$(git rev-parse --short HEAD)"
       - name: Set env to deploy
         id: vars
-        run: echo "The selected cluster is ${{ env.CLUSTER }} and version id ${{ steps.version.outputs.SHA_SHORT }}"
+        run: echo "The selected cluster is ${{ env.CLUSTER }} and version id ${{ github.sha }}"
         
