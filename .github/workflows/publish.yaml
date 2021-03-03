@@ -8,7 +8,7 @@ on:
       - "main"
 
 env:
-  CLUSTER: ${{ github.ref != 'refs/heads/main' && 'assessments-ecs-staging' || 'assessments-ecs-prod' }}
+  CLUSTER: ${{ github.ref == 'refs/heads/main' && 'assessments-ecs-staging' || 'assessments-ecs-prod' }}
 
 jobs:
   teste:
