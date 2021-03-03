@@ -24,6 +24,26 @@ jobs:
       run: echo "${{ github.ref }}"
     - name: Echo release
       run: echo "${{ github.event.release.prerelease }}"
+  variables:
+    runs-on: ubuntu-latest
+    outputs:
+      cluster: ${{ steps.slug.outputs.sha7 }}
+    steps:
+      - name: Set staging variables
+        id: staging
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "assessments-ecs-staging" > $CLUSTER
+          echo "::set-output name=cluster::$(echo assessments-ecs-staging)"
+          echo "::set-output name=backend_task::$(echo ecs/backend.json)"
+          echo "::set-output name=frontend_task::$(echo ecs/frontend.json)"
+      - name: Set prod variables
+        if: "!github.event.release.prerelease"
+        run: |
+          echo "assessments-ecs-prod" > $CLUSTER
+          echo "::set-output name=cluster::$(echo assessments-ecs-prod)"
+          echo "::set-output name=backend_task::$(echo ecs/backend.prod.json)"
+          echo "::set-output name=frontend_task::$(echo ecs/frontend.prod.json)"
       
       
         
