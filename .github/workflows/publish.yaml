@@ -33,14 +33,14 @@ jobs:
         id: staging
         if: github.ref == 'refs/heads/main'
         run: |
-          echo "assessments-ecs-staging" > $CLUSTER_2
+          echo "assessments-ecs-staging" > CLUSTER_2
           echo "::set-output name=cluster::$(echo assessments-ecs-staging)"
           echo "::set-output name=backend_task::$(echo ecs/backend.json)"
           echo "::set-output name=frontend_task::$(echo ecs/frontend.json)"
       - name: Set prod variables
         if: "!github.event.release.prerelease"
         run: |
-          echo "assessments-ecs-prod" > $CLUSTER_2
+          echo "assessments-ecs-prod" > CLUSTER_2
           echo "::set-output name=cluster::$(echo assessments-ecs-prod)"
           echo "::set-output name=backend_task::$(echo ecs/backend.prod.json)"
           echo "::set-output name=frontend_task::$(echo ecs/frontend.prod.json)"
