@@ -32,8 +32,13 @@ jobs:
       - name: Set staging variables
         id: staging
         run: |
-          [[ ${{ github.ref }} = 'refs/remotes/origin/main' ]] && env="staging" || env="prod"
-          echo "::set-output name=env::${env}"
+          if [ "${{ github.ref }}" == "refs/remotes/origin/main" ]; then
+            echo " é verdadeira"
+            echo "::set-output name=env::staging"
+          else
+            echo "não é verdadeira"
+            echo "::set-output name=env::prod"
+          fi
   final_job:
     runs-on: ubuntu-latest
     needs: variables
