@@ -1,9 +1,5 @@
 name: "Main"
 
-
-
-
-
 on:
   release:
     types: [published]
@@ -12,7 +8,7 @@ on:
       - "main"
 
 env:
-  CLUSTER: ${{ github.ref != 'refs/remotes/origin/main' && 'assessments-ecs-staging' || 'assessments-ecs-prod' }}
+  CLUSTER: ${{ github.ref != 'refs/heads/main' && 'assessments-ecs-staging' || 'assessments-ecs-prod' }}
 
 jobs:
   teste:
@@ -36,7 +32,7 @@ jobs:
       - name: Set staging variables
         id: staging
         run: |
-          if [ "${{ github.ref }}" == "refs/remotes/origin/main" ]; then
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             echo " é verdadeira"
             echo "::set-output name=env::staging"
           else
