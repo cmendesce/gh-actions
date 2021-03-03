@@ -27,7 +27,7 @@ jobs:
   variables:
     runs-on: ubuntu-latest
     outputs:
-      cluster: ${{ CLUSTER_2 }}
+      cluster: $CLUSTER_2
     steps:
       - name: Set staging variables
         id: staging
