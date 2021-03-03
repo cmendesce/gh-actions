@@ -26,8 +26,6 @@ jobs:
       run: echo "${{ github.event.release.prerelease }}"
   variables:
     runs-on: ubuntu-latest
-    outputs:
-      cluster: $CLUSTER_2
     steps:
       - name: Set staging variables
         id: staging
@@ -49,7 +47,7 @@ jobs:
     needs: variables
     steps:
     - name: show env
-      run: echo "${{ needs.variables.outputs.cluster }}"
+      run: echo $(cat CLUSTER_2)
       
       
         
