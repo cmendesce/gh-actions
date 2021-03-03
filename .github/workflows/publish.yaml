@@ -8,7 +8,7 @@ on:
       - "main"
 
 env:
-  CLUSTER:  ${{ github.ref != 'refs/remotes/origin/main' && 'assessments-ecs-staging' || 'assessments-ecs-prod' }}
+  CLUSTER: ${{ github.ref != 'refs/remotes/origin/main' && 'assessments-ecs-staging' || 'assessments-ecs-prod' }}
 
 jobs:
   teste:
@@ -26,28 +26,20 @@ jobs:
       run: echo "${{ github.event.release.prerelease }}"
   variables:
     runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.staging.outputs.env }}
     steps:
       - name: Set staging variables
         id: staging
-        if: github.ref == 'refs/heads/main'
         run: |
-          echo "::set-env name=CLUSTER_2::assessments-ecs-staging"
-          echo "::set-output name=cluster::$(echo assessments-ecs-staging)"
-          echo "::set-output name=backend_task::$(echo ecs/backend.json)"
-          echo "::set-output name=frontend_task::$(echo ecs/frontend.json)"
-      - name: Set prod variables
-        if: "!github.event.release.prerelease"
-        run: |
-          echo "::set-env name=CLUSTER_2::assessments-ecs-prod"
-          echo "::set-output name=cluster::$(echo assessments-ecs-prod)"
-          echo "::set-output name=backend_task::$(echo ecs/backend.prod.json)"
-          echo "::set-output name=frontend_task::$(echo ecs/frontend.prod.json)"
+          [[ ${{ github.ref }} = 'refs/remotes/origin/main' ]] && env="staging" || env="prod"
+          echo "::set-output name=env::${env}"
   final_job:
     runs-on: ubuntu-latest
     needs: variables
     steps:
     - name: show env
-      run: echo $(cat CLUSTER_2)
+      run: ${{ needs.variables.outputs.env }}
       
       
         
