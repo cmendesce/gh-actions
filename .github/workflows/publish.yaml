@@ -39,7 +39,7 @@ jobs:
     needs: variables
     steps:
     - name: show env
-      run: ${{ needs.variables.outputs.env }}
+      run: echo "${{ needs.variables.outputs.env }}"
       
       
         
