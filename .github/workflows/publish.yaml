@@ -44,6 +44,12 @@ jobs:
           echo "::set-output name=cluster::$(echo assessments-ecs-prod)"
           echo "::set-output name=backend_task::$(echo ecs/backend.prod.json)"
           echo "::set-output name=frontend_task::$(echo ecs/frontend.prod.json)"
+  final_job:
+    runs-on: ubuntu-latest
+    needs: variables
+    steps:
+    - name: show env
+      run: echo "${{ needs.variables.outputs.cluster }}"
       
       
         
